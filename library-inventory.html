@@ -719,12 +719,103 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── 반응형 (PC) ── */
-  @media (min-width: 640px) {
-    .bottom-nav { left: 50%; transform: translateX(-50%); max-width: 540px; border-left: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
-    #app { max-width: 540px; margin: 0 auto; box-shadow: var(--shadow-lg); min-height: 100vh; background: var(--white); }
+  /* ══════════════════════════════════════
+     완전 적응형 반응형 레이아웃
+     모든 모바일·태블릿·PC 자동 대응
+  ══════════════════════════════════════ */
+
+  /* 기본: 모바일 (~ 599px) — 변경 없음, 기존 스타일 유지 */
+
+  /* 소형 태블릿 / 대형 폰 가로 (600px ~) */
+  @media (min-width: 600px) {
+    #app { max-width: 100%; margin: 0; box-shadow: none; }
+    body { background: var(--white); }
+    .bottom-nav { left: 0; transform: none; max-width: 100%; border-radius: 0; border-left: none; border-right: none; }
+    .dashboard-header { padding: 24px 20px 20px; }
+    .stats-grid { padding: 16px 20px; gap: 14px; }
+    .stat-card .num { font-size: 28px; }
+    .buy-section { padding: 0 20px; }
+    .section-title { padding: 0 20px; }
+    .cat-header { padding: 13px 20px; }
+    .item-row-main { padding: 13px 20px; }
+    .item-detail { padding: 0 20px 16px 48px; }
+    .subcat-header { padding: 9px 20px 7px 58px; }
+    .settings-page { padding: 20px; }
+    .search-result-count { padding: 10px 20px; }
+    .inline-img-box { max-width: 260px; }
+    /* 2열 그리드 시작 */
+    #buyList { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .buy-empty { grid-column: 1 / -1; }
+  }
+
+  /* 중형 태블릿 (768px ~) — 갤탭 S7+ 세로 등 */
+  @media (min-width: 768px) {
+    :root { --header-h: 60px; --bottom-h: 68px; }
+    .header-title { font-size: 19px; }
+    .dashboard-header { padding: 28px 24px 24px; }
+    .stats-grid { padding: 20px 24px; gap: 16px; }
+    .stat-card { padding: 18px 14px; }
+    .stat-card .num { font-size: 34px; }
+    .stat-card .label { font-size: 12px; }
+    .buy-section { padding: 0 24px; }
+    .section-title { padding: 0 24px; font-size: 14px; }
+    .cat-header { padding: 15px 24px; }
+    .cat-name { font-size: 16px; }
+    .item-row-main { padding: 15px 24px; }
+    .item-name { font-size: 15px; }
+    .item-detail { padding: 0 24px 20px 52px; }
+    .subcat-header { padding: 10px 24px 8px 64px; font-size: 12px; }
+    .settings-page { padding: 24px; }
+    .inline-img-box { max-width: 300px; }
+    .qty-btn { width: 42px; height: 42px; font-size: 22px; }
+    .qty-input { width: 58px; height: 42px; font-size: 17px; }
+    .nav-item { font-size: 12px; }
+    .nav-item svg { width: 24px; height: 24px; }
+    /* 재고목록 2열 */
+    .subcat-group { display: grid; grid-template-columns: 1fr 1fr; }
+    .subcat-header { grid-column: 1 / -1; }
+  }
+
+  /* 대형 태블릿 / 소형 PC (1024px ~) — 갤탭 S7+ 가로, iPad Pro 등 */
+  @media (min-width: 1024px) {
+    .dashboard-header { padding: 32px 32px 28px; }
+    .stats-grid { padding: 24px 32px; gap: 20px; }
+    .stat-card .num { font-size: 38px; }
+    .buy-section { padding: 0 32px; }
+    .section-title { padding: 0 32px; }
+    .cat-header { padding: 16px 32px; }
+    .item-row-main { padding: 16px 32px; }
+    .item-detail { padding: 0 32px 24px 60px; }
+    .subcat-header { padding: 11px 32px 9px 72px; }
+    .settings-page { padding: 32px; }
+    .settings-card { max-width: 640px; }
+    .inline-img-box { max-width: 340px; }
+    /* 3열 그리드 */
+    #buyList { grid-template-columns: 1fr 1fr 1fr; }
+    .subcat-group { grid-template-columns: 1fr 1fr 1fr; }
+    /* 모달 중앙 정렬 */
+    .modal-overlay { align-items: center; }
+    .modal { border-radius: var(--radius-lg); max-width: 560px; }
+  }
+
+  /* 대형 PC (1280px ~) */
+  @media (min-width: 1280px) {
+    #app { max-width: 1200px; margin: 0 auto; box-shadow: var(--shadow-lg); }
     body { background: var(--gray-100); }
-    .header { border-radius: 0; }
+    .bottom-nav { left: 50%; transform: translateX(-50%); max-width: 1200px; border-left: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); }
+    /* 사이드바 + 메인 2단 레이아웃 */
+    .main { display: grid; grid-template-columns: 260px 1fr; grid-template-rows: auto; }
+    #pageDashboard, #pageInventory, #pageSearch, #pageSettings {
+      grid-column: 2;
+    }
+    /* PC에서 하단 네비 대신 사이드바 스타일 */
+    .bottom-nav {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      max-width: 1200px;
+    }
+    #buyList { grid-template-columns: 1fr 1fr; }
+    .subcat-group { grid-template-columns: 1fr 1fr; }
+    .stat-card .num { font-size: 36px; }
   }
 </style>
 </head>
